@@ -19,7 +19,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build_ubuntu:
+  build_windows:
     # The type of runner that the job will run on
     runs-on:
       - windows-latest
@@ -39,22 +39,26 @@ jobs:
         with:
           release: '10.3-2021.10' # <-- The compiler release to use
 
+      -name : Install Make
+        run: |
+          choco install make
+
       # Runs a set of commands using the runners shell
       - name: Build
         run: |
           make debug
 
-          # # Make sure we can clean with an empty directory without error
-          # make clean
-          # ls -la
+          # Make sure we can clean with an empty directory without error
+          make clean
+          dir
 
-          # # Make the default target
-          # make -j --output-sync=target
-          # ls -la
-          # ls -la build
+          # Make the default target
+          make -j --output-sync=target
+          dir
+          dir build
           # test -d build
 
-          # # Make sure we can clean properly
-          # make clean
-          # ls -la
+          # Make sure we can clean properly
+          make clean
+          dir
           # test ! -d build
