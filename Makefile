@@ -55,7 +55,8 @@ $(BUILD_DIR)/%.o: %.c
 # Set the default goal
 .DEFAULT_GOAL := all
 .PHONY: all
-all: $(BUILD_DIR) $(OBJS)
+all: $(BUILD_DIR)
+all: $(OBJS)
 
 .PHONY: debug
 debug:
