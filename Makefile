@@ -52,10 +52,15 @@ $(BUILD_DIR):
 $(BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) -o $(call FIXPATH,$(@)) $(call FIXPATH,$(<))
 
+# Making this a phony target to enforce orering of creating the build
+# directory before trying to do any commpiling.
+.PHONY: mkbuildir
+mkbuildir: $(BUILD_DIR)
+
 # Set the default goal
 .DEFAULT_GOAL := all
 .PHONY: all
-all: $(BUILD_DIR)
+all: mkbuildir
 all: $(OBJS)
 
 .PHONY: debug
