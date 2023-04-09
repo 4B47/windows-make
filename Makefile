@@ -49,18 +49,12 @@ OBJS        := $(OBJS_NOPATH:%.o=$(BUILD_DIR)/%.o)
 $(BUILD_DIR):
 	$(call MKDIR, $(BUILD_DIR))
 
-$(BUILD_DIR)/%.o: %.c
+$(BUILD_DIR)/%.o: %.c $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $(call FIXPATH,$(@)) $(call FIXPATH,$(<))
-
-# Making this a phony target to enforce orering of creating the build
-# directory before trying to do any commpiling.
-.PHONY: mkbuildir
-mkbuildir: $(BUILD_DIR)
 
 # Set the default goal
 .DEFAULT_GOAL := all
 .PHONY: all
-all: mkbuildir
 all: $(OBJS)
 
 .PHONY: debug
