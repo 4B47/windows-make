@@ -1,4 +1,4 @@
-name: build_ubuntu
+name: build_windows
 
 # Cancel stale runs
 # This will cancel running workflows if a new commit is pushed
