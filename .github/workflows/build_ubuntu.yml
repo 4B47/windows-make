@@ -36,7 +36,6 @@ jobs:
       - name: Install ARM GCC Toolchain (arm-none-eabi-gcc)
         uses: carlosperate/arm-none-eabi-gcc-action@v1
         id: arm-none-eabi-gcc-action
-        if: ${{ steps.check_watch.outputs.RUN_TEST == '1' }}
         with:
           release: '10.3-2021.10' # <-- The compiler release to use
 
