@@ -39,7 +39,8 @@ jobs:
         with:
           release: '10.3-2021.10' # <-- The compiler release to use
 
-      -name : Install Make
+      # Install GNU make tools with choco package manager
+      - name: Install Make
         run: |
           choco install make
 
