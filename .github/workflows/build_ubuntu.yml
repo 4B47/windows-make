@@ -52,7 +52,9 @@ jobs:
           make -j --output-sync=target
           ls -la
           ls -la build
+          test -d build
 
           # Make sure we can clean properly
           make clean
           ls -la
+          test ! -d build
