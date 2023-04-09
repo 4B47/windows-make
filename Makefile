@@ -12,17 +12,19 @@ ifeq ($(DETECTED_OS), Windows)
 	RM = $(wordlist 2,65535,$(foreach FILE,$(subst /,\,$(1)),& del /q $(FILE) > nul 2>&1)) || (exit 0)
 	RMDIR = rmdir /q /s $(subst /,\,$(1)) > nul 2>&1 || (exit 0)
 	ECHO = echo $(1)
+	FIXPATH = $(subst /,\,$(1))
 else
 	MKDIR = mkdir -p $(1)
 	RM = rm -rf $(1) > /dev/null 2>&1 || true
 	RMDIR = $(RM)
 	ECHO = echo "$(1)"
+	FIXPATH = $(1)
 endif
 
 PREFIX=arm-none-eabi
 
 # The command for calling the compiler.
-CC=${PREFIX}-gcc
+CC=$(PREFIX)-gcc
 
 CFLAGS=-mthumb \
 	-mcpu=cortex-m4 \
@@ -37,25 +39,35 @@ CFLAGS=-mthumb \
 
 BUILD_DIR ?= build
 
-${BUILD_DIR}:
-	$(call MKDIR, ${BUILD_DIR})
+SRCS = main.c
 
-${BUILD_DIR}/%.o: %.c
-	$(CC) $(CFLAGS) -o ${@} ${<}
+# Create output object file names
+SRCS_NOPATH := $(foreach NAME,$(SRCS),$(basename $(notdir $(NAME))).c)
+OBJS_NOPATH := $(SRCS_NOPATH:.c=.o)
+OBJS        := $(OBJS_NOPATH:%.o=$(BUILD_DIR)/%.o)
+
+$(BUILD_DIR):
+	$(call MKDIR, $(BUILD_DIR))
+
+$(BUILD_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) -o $(call FIXPATH,$(@)) $(call FIXPATH,$(<))
 
 # Set the default goal
 .DEFAULT_GOAL := all
 .PHONY: all
-all: ${BUILD_DIR} ${BUILD_DIR}/main.o
+all: $(BUILD_DIR) $(OBJS)
 
 .PHONY: debug
 debug:
-	$(info $$DETECTED_OS is [${DETECTED_OS}])
-	$(info $$CC is [${CC}])
-	$(info $$MKDIR is [${MKDIR}])
-	$(info $$RM is [${RM}])
-	$(info $$RMDIR is [${RMDIR}])
-	$(info $$ECHO is [${ECHO}])
+	$(info $$DETECTED_OS [$(DETECTED_OS)])
+	$(info $$CC [$(CC)])
+	$(info $$MKDIR [$(MKDIR)])
+	$(info $$RM [$(RM)])
+	$(info $$RMDIR [$(RMDIR)])
+	$(info $$ECHO [$(ECHO)])
+	$(info $$OBJS [$(OBJS)])
+	$(info $$BUILD_DIR [$(BUILD_DIR)])
+	$(info $$FIXPATH [$(FIXPATH)])
 
 .PHONY: clean
 clean:
