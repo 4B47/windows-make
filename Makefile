@@ -50,7 +50,7 @@ $(BUILD_DIR):
 	$(call MKDIR, $(BUILD_DIR))
 
 $(BUILD_DIR)/%.o: %.c $(BUILD_DIR)
-	$(CC) $(CFLAGS) -o $(call FIXPATH,$(@)) $(call FIXPATH,$(<))
+	$(CC) $(CFLAGS) -o $(@) $(<)
 
 # Set the default goal
 .DEFAULT_GOAL := all
