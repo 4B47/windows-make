@@ -50,8 +50,8 @@ jobs:
 
           # Make the default target
           make -j --output-sync=target
-          la -la
-          la -la build
+          ls -la
+          ls -la build
 
           # Make sure we can clean properly
           make clean
