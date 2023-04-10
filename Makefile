@@ -27,12 +27,12 @@ endif
 # Define some utilities for Windows and the other operating systems
 # These should be used throughout the Makefiles to keep everything OS agnostic
 ifeq ($(DETECTED_OS), Windows)
-	SHELL := cmd.exe
-	FIXPATH := $(subst /,\,$(1))
-	MKDIR := mkdir $(subst /,\,$(1))
-	RM := if exist $(subst /,\,$(1)) del /Q /F $(subst /,\,$(1))
-	RMDIR := if exist $(subst /,\,$(1)) rmdir /Q /S $(subst /,\,$(1))
-	ECHO := echo $(1)
+	SHELL = cmd.exe
+	FIXPATH = $(subst /,\,$(1))
+	MKDIR = cmd /c mkdir $(call FIXPATH,$(1))
+	RM = cmd /c if exist $(call FIXPATH,$(1)) del /Q /F $(call FIXPATH,$(1))
+	RMDIR = cmd /c if exist $(call FIXPATH,$(1)) rmdir /Q /S $(call FIXPATH,$(1))
+	ECHO = cmd /c echo $(1)
 else
 	FIXPATH = $(1)
 	MKDIR = mkdir -p $(1)
