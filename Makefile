@@ -29,8 +29,8 @@ endif
 ifeq ($(DETECTED_OS), Windows)
 	FIXPATH = $(subst /,\,$(1))
 	MKDIR = mkdir $(subst /,\,$(1))
-	RM =  if exist $(subst /,\,$(1)) del /q /f $(subst /,\,$(1))
-	RMDIR = if exist $(subst /,\,$(1)) rmdir /q /s $(subst /,\,$(1))
+	RM =  del /q /f $(subst /,\,$(1))
+	RMDIR = rmdir /q /s $(subst /,\,$(1))
 	ECHO = echo $(1)
 else
 	FIXPATH = $(1)
