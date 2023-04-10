@@ -6,7 +6,7 @@ ifeq ($(OS),Windows_NT)
 # Windows and MSYS/MINGW/CYGWIN define OS as "Windows_NT"
 # Only native Windows uses ";" in the PATH variable
 ifeq '$(findstring ;,$(PATH))' ';'
-    DETECTED_OS := Windows
+	DETECTED_OS := Windows
 else
 	DETECTED_OS := Not_Windows
 endif
