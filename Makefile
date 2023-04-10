@@ -28,9 +28,9 @@ endif
 # These should be used throughout the Makefiles to keep everything OS agnostic
 ifeq ($(DETECTED_OS), Windows)
 	FIXPATH = $(subst /,\,$(1))
-	MKDIR = mkdir $(call FIXPATH,$(1))
-	RM =  if exist $(call FIXPATH,$(1)) del /q /f $(call FIXPATH,$(1))
-	RMDIR = if exist $(call FIXPATH,$(1)) rmdir /q /s $(call FIXPATH,$(1))
+	MKDIR = mkdir $(subst /,\,$(1))
+	RM =  if exist $(subst /,\,$(1)) del /q /f $(subst /,\,$(1))
+	RMDIR = if exist $(subst /,\,$(1)) rmdir /q /s $(subst /,\,$(1))
 	ECHO = echo $(1)
 else
 	FIXPATH = $(1)
